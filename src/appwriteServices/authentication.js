@@ -2,10 +2,10 @@ import { envVars } from "../importEnvVars/importEnvVars";
 import { Client, Account, ID } from "appwrite";
 class AuthService{
     constructor(){
-        const client=new Client()
+        this.client=new Client()
             .setEndpoint(envVars.appUrl)
             .setProject(envVars.appProjectId)
-        const account=new Account(this.client)
+        this.account=new Account(this.client)
     }
 
     async createUserAccount({email,password}){
