@@ -9,14 +9,14 @@ class DatabaseService{
         this.databases=new Databases(this.client)
     }
 
-    async createBlog({tittle,slug,content,status,featuredImgId,userId}){
+    async createBlog({title,slug,content,status,featuredImgId,userId}){
         try {
             return await this.databases.createDocument(
                 envVars.appDBID,
                 envVars.appCollectionId,
                 slug,
                 {
-                    tittle,
+                    title,
                     content,
                     status,
                     featuredImgId,
@@ -36,14 +36,14 @@ class DatabaseService{
         }
     }
 
-    async updateBlog({tittle,content,slug,featuredImgId,status}){
+    async updateBlog({title,content,slug,featuredImgId,status}){
         try {
             return await this.databases.updateDocument(
                 envVars.appDBID,
                 envVars.appCollectionId,
                 slug,
                 {
-                    tittle,
+                    title,
                     content,
                     status,
                     featuredImgId

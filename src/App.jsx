@@ -11,7 +11,7 @@ function App() {
     authService.getCurrentUser()
       .then((userData)=>{
         if(userData) dispatch(authActions.logIn(userData))
-        else dispatch(authActions.logIn())
+        else dispatch(authActions.logOut())
       })
       .catch(error=>console.log(error))
       .finally(()=>setIsLoading(false))

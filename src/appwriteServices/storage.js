@@ -25,6 +25,11 @@ class StorageService{
         }
     }
 
+    getFilePreview(fileId){
+        const filePreview=this.storage.getFilePreview(envVars.appBucketId,fileId)
+        if(filePreview) return filePreview
+        return null
+    }
 }
 
 export const storageService=new StorageService()
