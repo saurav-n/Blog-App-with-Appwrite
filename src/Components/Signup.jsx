@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import { authActions } from "../app/authSlice";
 import Input from "./Input";
 
-export default function Signup() {
+export default function SignupComponent() {
     const [error, setError] = useState('');
     const { register, handleSubmit } = useForm()
     const navigate = useNavigate()

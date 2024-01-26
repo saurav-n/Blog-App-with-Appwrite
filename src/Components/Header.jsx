@@ -6,7 +6,7 @@ import { useDispatch,useSelector } from "react-redux";
 export default function Header(){
     const navigate=useNavigate()
     const dispatch=useDispatch()
-    const isUserLoggedIn=useSelector(state=>state.status)
+    const isUserLoggedIn=useSelector(state=>state.auth.status)
 
     const handleLogOut=()=>{
         authService.logOut()

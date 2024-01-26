@@ -1,12 +1,18 @@
 import { useState, useEffect } from "react"
 import { authActions } from "./app/authSlice"
-import { useDispatch, useSelector } from 'react-redux'
+import { postActions } from "./app/postSlice";
+import { useDispatch } from 'react-redux'
 import { authService } from "./appwriteServices/authentication";
+import { dbService } from "./appwriteServices/database";
+import { LoadingContextProvider } from "./app/LoadingContext";
+import Header from "./Components/Header";
+import { Outlet } from "react-router";
+import Footer from "./Components/Footer";
+
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch=useDispatch()
-  const isUserLoggedIn=useSelector(state=>state.status)
   useEffect(()=>{
     authService.getCurrentUser()
       .then((userData)=>{
@@ -15,16 +21,20 @@ function App() {
       })
       .catch(error=>console.log(error))
       .finally(()=>setIsLoading(false))
+    
+    dbService.getBlogs()
+      .then((posts)=>{
+        if(posts) dispatch(postActions.setPosts(posts))
+      })
+      .catch(error=>console.log(error))
   },[])
 
-  return !isLoading ? (
-    isUserLoggedIn?(
-      <p>user is logged in</p>
-    ):(
-      <p>user is not logged in so displaying sinup page</p>
-    )
-  ) : (
-    <p>app loading...</p>
+  return(
+    <LoadingContextProvider value={{isAppLoading:isLoading}}>
+      <Header/>
+      <Outlet/>
+      <Footer/>
+    </LoadingContextProvider>
   )
   
 }

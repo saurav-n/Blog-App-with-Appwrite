@@ -6,7 +6,7 @@ import { authActions } from "../app/authSlice";
 import { useForm } from "react-hook-form"
 import Input from "./Input";
 
-export default function Login() {
+export default function LogInComponent() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [error, setError] = useState('');
