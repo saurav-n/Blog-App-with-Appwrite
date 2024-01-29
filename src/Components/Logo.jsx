@@ -1,8 +1,8 @@
 export default function Logo({classname}){
     return(
-        <div className={`${classname}`}>
+        <div className={`rounded-xl overflow-hidden ${classname}`}>
             <img 
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzIiM1KNBa_tfkBw1M7m07wIkPRzMunuRIAeP6OLQiOw&s" 
+            src="https://play-lh.googleusercontent.com/cWG9-bk2_zLdKsN9vsYEdbCReVfzgXU6FeHUmLI8a24FoZ05TpOLYXInCQ278FTwCw" 
             alt="logo" 
             className="w-full h-full"
             />

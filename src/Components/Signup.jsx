@@ -4,7 +4,9 @@ import { useDispatch } from "react-redux";
 import { authService } from "../appwriteServices/authentication";
 import { useNavigate } from "react-router";
 import { authActions } from "../app/authSlice";
+import { Link } from "react-router-dom";
 import Input from "./Input";
+import Logo from "./Logo";
 
 export default function SignupComponent() {
     const [error, setError] = useState('');

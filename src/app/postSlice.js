@@ -12,7 +12,7 @@ const postSlice=createSlice({
             state.posts=action.payload
         },
         addPost:(state,action)=>{
-            state.posts=state.posts.push(action.payload)
+            state.posts.push(action.payload)
         },
         deletePost:(state,action)=>{
             state.posts=state.posts.filter(post=>post.$id!==action.payload)

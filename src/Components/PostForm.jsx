@@ -14,10 +14,10 @@ export default function PostForm({post}){
     const id=useId()
     const {control,register,watch,handleSubmit,setValue,getValues}=useForm({
             defaultValues:{
-                title:post.title?post.title:'',
-                slug:post.$id?post.$id:'',
-                content:post.content?post.content:'',
-                status:post.status?post.status:'active'
+                title:post?post.title:'',
+                slug:post?post.$id:'',
+                content:post?post.content:'',
+                status:post?post.status:'active'
             }
     })
     const navigate=useNavigate()
@@ -36,15 +36,14 @@ export default function PostForm({post}){
                 ...data,
                 featuredImgId:file?file.$id:post.featuredImgId
             })
-
+            console.log(dbPost.content)
             if(dbPost) {
-                dispatch(postActions.updatePost({id:dbPost.$is,updatedPost:dbPost}))
+                dispatch(postActions.updatePost({id:dbPost.$id,updatedPost:dbPost}))
                 navigate(`/post/${dbPost.$id}`)
             }
         }
         else{
             const file=data.image[0]?await storageService.uploadFile(data.image[0]):null
-
             const dbPost=await dbService.createBlog({
                 ...data,
                 featuredImgId:file?file.$id:undefined,
@@ -52,7 +51,7 @@ export default function PostForm({post}){
             })
 
             if(dbPost) {
-                dispatch(postActions.addPost(dbPost))
+                if(dbPost.status==='active') dispatch(postActions.addPost(dbPost))
                 navigate(`/post/${dbPost.$id}`)
             }
         }
@@ -60,14 +59,14 @@ export default function PostForm({post}){
 
    
     const slugTransform=(vlaue)=>{
-        if(vlaue && typeof vlaue=='string'){
+        if(vlaue && typeof vlaue==='string'){
             return vlaue.
                 trim().
                 toLowerCase().
                 replace(/[^a-zA-Z\d\s]+/g, "-").
                 replace(/\s/g, "-")
         }
-        return ID.unique()
+        return ''
     }
 
     useEffect(()=>{
@@ -110,7 +109,7 @@ export default function PostForm({post}){
                         <img src={storageService.getFilePreview(post.featuredImgId)} alt={post.title} />
                     </div>
                 }
-                <div className="w-full">
+                <div className="w-full flex flex-col gap-y-1">
                     <label htmlFor={id}>Status:</label>
                     <select 
                     name="" 
@@ -120,9 +119,9 @@ export default function PostForm({post}){
                     focus:bg-gray-50 duration-200 border border-gray-200 w-full"
                     >
                         <option value="active">active</option>
-                        <option value="inactive"></option>
+                        <option value="inactive">inactive</option>
                     </select>
-                    <button type="submit" className={`w-full ${post?'bg-green-500':''}`}>{post?'Update':'Submit'}</button>
+                    <button type="submit" className='w-full bg-green-500 rounded-md py-1'>{post?'Update':'Submit'}</button>
                 </div>
             </div>
         </form>

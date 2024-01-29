@@ -12,31 +12,32 @@ import Footer from "./Components/Footer";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const dispatch=useDispatch()
-  useEffect(()=>{
+  const dispatch = useDispatch()
+  useEffect(() => {
     authService.getCurrentUser()
-      .then((userData)=>{
-        if(userData) dispatch(authActions.logIn(userData))
+      .then((userData) => {
+        if (userData) {
+          dispatch(authActions.logIn(userData))
+          dbService.getBlogs()
+            .then((res) => {
+              if (res) dispatch(postActions.setPosts(res.documents))
+            })
+            .catch(error => console.log(error))
+        }
         else dispatch(authActions.logOut())
       })
-      .catch(error=>console.log(error))
-      .finally(()=>setIsLoading(false))
-    
-    dbService.getBlogs()
-      .then((posts)=>{
-        if(posts) dispatch(postActions.setPosts(posts))
-      })
-      .catch(error=>console.log(error))
-  },[])
+      .catch(error => console.log(error))
+      .finally(() => setIsLoading(false))
+  }, [])
 
-  return(
-    <LoadingContextProvider value={{isAppLoading:isLoading}}>
-      <Header/>
-      <Outlet/>
-      <Footer/>
+  return (
+    <LoadingContextProvider value={{ isAppLoading: isLoading }}>
+      <Header />
+      <Outlet />
+      <Footer />
     </LoadingContextProvider>
   )
-  
+
 }
 
 export default App
